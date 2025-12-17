@@ -1,0 +1,23 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Testing
+coverage
+
+# Production
+dist
+out
+build
+
+# Next.js
+.next/
+
+# Environment variables
+.env
+.env.local
+
+# Misc
+.DS_Store
+*.log

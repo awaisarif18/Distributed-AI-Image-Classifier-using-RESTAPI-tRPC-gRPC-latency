@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    /* Basics */
+    "target": "es2016",
+    "module": "commonjs",            /* CHANGED: This is the most robust setting for Node servers */
+    "rootDir": "./",
+    "outDir": "./dist",
+
+    /* Interop (Crucial for importing 'express' and 'multer') */
+    "esModuleInterop": true,         /* ADDED: Allows "import express from 'express'" to work */
+    "forceConsistentCasingInFileNames": true,
+
+    /* Type Checking */
+    "strict": true,
+    "skipLibCheck": true,            /* SAVER: Ignores errors in library definition files */
+    
+    /* Removed "verbatimModuleSyntax" and "noUncheckedIndexedAccess" to make coding faster/easier */
+  }
+}
