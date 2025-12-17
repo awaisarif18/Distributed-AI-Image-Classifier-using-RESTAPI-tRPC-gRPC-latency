@@ -11,7 +11,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: "http://localhost:4000/trpc", // Pointing to your Gateway
+          url: `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}/trpc`, // Pointing to your Gateway
         }),
       ],
     })

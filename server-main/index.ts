@@ -67,10 +67,10 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   oneofs: true,
 });
 const imageProto = (grpc.loadPackageDefinition(packageDefinition) as any).image;
-
+const AI_SERVICE_URL = process.env.AI_SERVICE_URL || "localhost:50051";
 // Connect to Microservice B (which is running on port 50051)
 const grpcClient = new imageProto.ImageClassifier(
-  "localhost:50051",
+  AI_SERVICE_URL,
   grpc.credentials.createInsecure()
 );
 

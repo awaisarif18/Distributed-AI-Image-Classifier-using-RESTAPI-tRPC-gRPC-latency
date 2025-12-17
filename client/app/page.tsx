@@ -42,6 +42,8 @@ export default function Home() {
   // 1. Initialize the tRPC Mutation Hook
   // This provides the .mutateAsync() function we use below
   const uploadMutation = trpc.uploadImage.useMutation();
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+  // Usage: axios.post(`${API_URL}/api/rest/upload`, ...)
 
   // Helper: Convert File to Base64 (required for sending files via JSON/tRPC)
   const toBase64 = (file: File) =>
@@ -69,10 +71,7 @@ export default function Home() {
         // --- REST IMPLEMENTATION ---
         const formData = new FormData();
         formData.append("image", file);
-        const res = await axios.post(
-          "http://localhost:4000/api/rest/upload",
-          formData
-        );
+        const res = await axios.post(`${API_URL}/api/rest/upload`, formData);
         result = res.data;
       } else if (method === "tRPC") {
         // --- REAL tRPC IMPLEMENTATION ---
@@ -90,7 +89,7 @@ export default function Home() {
         const formData = new FormData();
         formData.append("image", file);
         const res = await axios.post(
-          "http://localhost:4000/api/grpc-gateway/upload",
+          `${API_URL}/api/grpc-gateway/upload`,
           formData
         );
         result = res.data;
