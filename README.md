@@ -75,6 +75,7 @@ Bash
 
 # Clone the repository
 git clone https://[github.com/awaisarif18/Distributed-AI-Image-Classifier-using-RESTAPI-tRPC-gRPC-latency](https://github.com/awaisarif18/Distributed-AI-Image-Classifier-using-RESTAPI-tRPC-gRPC-latency).git 
+
 cd pdc-final-exam
 
 # Install dependencies for ALL services
@@ -109,10 +110,12 @@ npm run dev
 📂 Project Structure
 Plaintext
 
+
 ├── 📁 client/           # Frontend (Next.js 15, Tailwind, Chart.js)
 ├── 📁 server-main/      # API Gateway (Express, tRPC, gRPC Client)
 ├── 📁 service-ai/       # Microservice (Node.js, gRPC Server)
 └── 📁 protos/           # Shared Protocol Buffers (.proto definitions)
+
 👨‍💻 Technologies Used
 Frontend: Next.js 15 (App Router), Tailwind CSS, Framer Motion, Chart.js
 
