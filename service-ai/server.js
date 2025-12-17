@@ -1,11 +1,8 @@
-// final-exam-prep/service-ai/server.js
+const path = require("path");
 const grpc = require("@grpc/grpc-js");
 const protoLoader = require("@grpc/proto-loader");
-const path = require("path");
 
-// 1. Load the shared Proto file
 const PROTO_PATH = path.join(__dirname, "../protos/image.proto");
-
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   keepCase: true,
   longs: String,
@@ -13,49 +10,61 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   defaults: true,
   oneofs: true,
 });
-
 const imageProto = grpc.loadPackageDefinition(packageDefinition).image;
 
-// 2. The "Fake" AI Logic
+// Mock Classification Logic
 function classifyImage(call, callback) {
-  // 'call.request' contains the data sent from Server A
-  console.log(`[AI Service] Received image: ${call.request.filename}`);
+  console.log(
+    `📨 Received request: ${call.request.filename} (${call.request.imageData.length} bytes)`
+  );
 
-  const labels = ["Cat", "Dog", "Tumor", "Digit 5", "Airplane"];
-
-  // Simulate processing time (wait 100ms - 500ms)
-  const delay = Math.floor(Math.random() * 400) + 100;
-
+  // Simulate AI processing delay (e.g., 500ms)
   setTimeout(() => {
+    const labels = ["Cat", "Dog", "Car", "Building", "Tree"];
     const randomLabel = labels[Math.floor(Math.random() * labels.length)];
-    const randomConfidence = Math.random() * (0.99 - 0.7) + 0.7;
+    const confidence = (Math.random() * (0.99 - 0.7) + 0.7).toFixed(2);
 
-    // Send the result back
+    console.log(`✅ Processed: ${randomLabel} (${confidence})`);
+
     callback(null, {
       label: randomLabel,
-      confidence: randomConfidence,
+      confidence: parseFloat(confidence),
     });
-  }, delay);
+  }, 500);
 }
 
-// 3. Start the Server
 function main() {
   const server = new grpc.Server();
-
-  // Bind our function to the definition in the proto file
   server.addService(imageProto.ImageClassifier.service, {
     UploadImage: classifyImage,
   });
 
-  // USE DYNAMIC PORT FOR CLOUD
+  // RENDER FIX: Use strict 0.0.0.0 and process.env.PORT
   const PORT = process.env.PORT || "50051";
+  const BIND_ADDRESS = `0.0.0.0:${PORT}`;
 
-  // Render requires binding to 0.0.0.0
+  console.log(`⏳ Attempting to bind to ${BIND_ADDRESS}...`);
+
   server.bindAsync(
-    `0.0.0.0:${PORT}`,
-    grpc.ServerCredentials.createInsecure(),
-    () => {
-      console.log(`🤖 AI Microservice (gRPC) running on port ${PORT}`);
+    BIND_ADDRESS,
+    grpc.ServerCredentials.createInsecure(), // Render handles SSL termination externally
+    (error, port) => {
+      if (error) {
+        console.error("❌ Failed to bind:", error);
+        return;
+      }
+
+      // CRITICAL: Explicitly start the server (required in some setups)
+      // Note: In newer grpc-js versions this is optional, but adding it is safer for Render
+      try {
+        // server.start(); // Uncomment if using older grpc-js, but current version auto-starts on bind
+      } catch (e) {
+        console.log("Server already started or start() not needed.");
+      }
+
+      console.log(`_____________________________________________`);
+      console.log(`🤖 AI Microservice (gRPC) is LISTENING on port ${port}`);
+      console.log(`_____________________________________________`);
     }
   );
 }
