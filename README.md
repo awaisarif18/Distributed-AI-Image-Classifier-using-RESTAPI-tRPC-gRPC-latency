@@ -107,14 +107,14 @@ Bash
 cd client
 npm run dev
 # Output: Ready on http://localhost:3000
-📂 Project Structure
-Plaintext
+## 📂 Project Structure
 
-
+```text
 ├── 📁 client/           # Frontend (Next.js 15, Tailwind, Chart.js)
 ├── 📁 server-main/      # API Gateway (Express, tRPC, gRPC Client)
 ├── 📁 service-ai/       # Microservice (Node.js, gRPC Server)
 └── 📁 protos/           # Shared Protocol Buffers (.proto definitions)
+```
 
 👨‍💻 Technologies Used
 Frontend: Next.js 15 (App Router), Tailwind CSS, Framer Motion, Chart.js
