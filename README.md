@@ -74,7 +74,7 @@ npm or yarn
 Bash
 
 # Clone the repository
-git clone https://github.com/yourusername/pdc-final-exam.git
+git clone https://[github.com/awaisarif18/Distributed-AI-Image-Classifier-using-RESTAPI-tRPC-gRPC-latency](https://github.com/awaisarif18/Distributed-AI-Image-Classifier-using-RESTAPI-tRPC-gRPC-latency).git 
 cd pdc-final-exam
 
 # Install dependencies for ALL services
