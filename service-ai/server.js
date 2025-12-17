@@ -47,11 +47,15 @@ function main() {
     UploadImage: classifyImage,
   });
 
+  // USE DYNAMIC PORT FOR CLOUD
+  const PORT = process.env.PORT || "50051";
+
+  // Render requires binding to 0.0.0.0
   server.bindAsync(
-    "0.0.0.0:50051",
+    `0.0.0.0:${PORT}`,
     grpc.ServerCredentials.createInsecure(),
     () => {
-      console.log("🤖 AI Microservice (gRPC) running on port 50051");
+      console.log(`🤖 AI Microservice (gRPC) running on port ${PORT}`);
     }
   );
 }
