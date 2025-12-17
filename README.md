@@ -9,7 +9,7 @@
 
 ---
 
-## 📑 Exam Report: Performance Analysis
+## 📑 Performance Analysis
 
 This system was built to compare three different communication protocols. Below are the findings based on live system metrics captured during testing.
 
@@ -55,5 +55,76 @@ graph LR
     subgraph "Microservice B"
     AI
     end
+```
+Client (Next.js): A modern dashboard for uploading images and visualizing real-time latency graphs.
 
+Server Main (Gateway): Handles HTTP/REST requests and acts as a gRPC Client to forward heavy tasks.
+
+Service AI (Backend): A pure gRPC server listening on port 50051. It receives binary data, "processes" it, and returns classifications.
+
+🛠 Installation & Setup
+This project uses a Monorepo structure. You will need 3 separate terminals to run the full system.
+
+Prerequisites
+Node.js v20+ (v24.5.0 recommended)
+
+npm or yarn
+
+1. Clone & Install
+Bash
+
+# Clone the repository
+git clone https://github.com/yourusername/pdc-final-exam.git
+cd pdc-final-exam
+
+# Install dependencies for ALL services
+cd client && npm install && cd ..
+cd server-main && npm install && cd ..
+cd service-ai && npm install && cd ..
+🚀 How to Run
+Terminal 1: AI Microservice (The "Brain")
+This service must run first. It listens for gRPC connections.
+
+Bash
+
+cd service-ai
+node server.js
+# Output: 🤖 AI Microservice (gRPC) running on port 50051
+Terminal 2: API Gateway (The "Bridge")
+This server handles REST, tRPC, and talks to the AI service.
+
+Bash
+
+cd server-main
+npx ts-node index.ts
+# Output: 🚀 API Gateway (REST + tRPC) running on http://localhost:4000
+Terminal 3: Client UI (The "Face")
+The Next.js frontend application.
+
+Bash
+
+cd client
+npm run dev
+# Output: Ready on http://localhost:3000
+📂 Project Structure
+Plaintext
+
+├── 📁 client/           # Frontend (Next.js 15, Tailwind, Chart.js)
+├── 📁 server-main/      # API Gateway (Express, tRPC, gRPC Client)
+├── 📁 service-ai/       # Microservice (Node.js, gRPC Server)
+└── 📁 protos/           # Shared Protocol Buffers (.proto definitions)
+👨‍💻 Technologies Used
+Frontend: Next.js 15 (App Router), Tailwind CSS, Framer Motion, Chart.js
+
+Backend: Node.js, Express, TypeScript
+
+Communication:
+
+REST: Standard HTTP/JSON
+
+tRPC: End-to-end type safety
+
+gRPC: Google's high-performance RPC framework
+
+Protobuf: Binary serialization format
     
